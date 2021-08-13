@@ -103,7 +103,7 @@ jobs:
       - run:
           name: Front-end scan
           command: |
-            cd ~/project/backend
+            cd ~/project/frontend
             npm audit --audit-level=critical
 
   scan-backend:
@@ -112,7 +112,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [ frontend-build ]
+          keys: [ backend-build ]
       - run:
           name: Front-end scan
           command: |
