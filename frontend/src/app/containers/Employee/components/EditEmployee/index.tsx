@@ -234,7 +234,7 @@ export class EditEmployee extends Component<EditEmployee.Props, EditEmployee.Sta
     const requestExecutionCallback = () => this.props.actions.updateNumberField(
       this.state.employeeId,
       { value: salaryValue },
-      name
+      name,
     );
 
     this.processInputChange(
@@ -250,7 +250,7 @@ export class EditEmployee extends Component<EditEmployee.Props, EditEmployee.Sta
     const requestExecutionCallback = () => this.props.actions.updateStringField(
       this.state.employeeId,
       { value },
-      name
+      name,
     );
 
     this.processInputChange(
@@ -266,7 +266,7 @@ export class EditEmployee extends Component<EditEmployee.Props, EditEmployee.Sta
     const requestExecutionCallback = () => this.props.actions.updateStringField(
       this.state.employeeId,
       { value },
-      name
+      name,
     );
 
     this.processInputChange(
@@ -282,7 +282,7 @@ export class EditEmployee extends Component<EditEmployee.Props, EditEmployee.Sta
     const requestExecutionCallback = () => this.props.actions.updateStringField(
       this.state.employeeId,
       { value },
-      name
+      name,
     );
 
     this.processInputChange(
