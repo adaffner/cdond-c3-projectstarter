@@ -114,7 +114,7 @@ jobs:
       - restore_cache:
           keys: [ backend-build ]
       - run:
-          name: Front-end scan
+          name: Backend-end scan
           command: |
             cd ~/project/backend
             npm audit --audit-level=critical
