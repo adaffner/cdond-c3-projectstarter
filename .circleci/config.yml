@@ -148,6 +148,8 @@ jobs:
                --query 'Reservations[*].Instances[*].PublicIpAddress' \
                --output text >> inventory.txt
       - persist_to_workspace:
+          docker:
+            - image: circleci/node:13.8.0
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
