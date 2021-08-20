@@ -157,7 +157,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       - run:
-          name: get public dns name
+          name: get public dns name of ec2 instance
           command: |
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicDnsName' \
