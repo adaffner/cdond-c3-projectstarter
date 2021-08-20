@@ -159,8 +159,9 @@ jobs:
       - run:
           name: get public dns name
           command: |
-            echo "aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicDnsName'" >> ${PublicDnsName}
+            aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicDnsName' \
+              --output text >> $PublicDnsName
       - run:
           name: save backend url to memstash.io
           command: |
