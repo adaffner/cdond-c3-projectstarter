@@ -149,7 +149,7 @@ jobs:
                --output text >> inventory.txt
       - persist_to_workspace:
           docker:
-            - image: cimg/base:2021.04
+            - image: cimg/python:3.9.6
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
