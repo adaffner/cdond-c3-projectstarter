@@ -152,21 +152,22 @@ jobs:
             aws ec2 describe-instances \
                --query 'Reservations[*].Instances[*].PublicIpAddress' \
                --output text >> inventory.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/.circleci/ansible/inventory.txt
       - run:
           name: get public dns name
           command: |
             echo "aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicDnsName'" >> $PublicDnsName
+              --query 'Reservations[*].Instances[*].PublicDnsName'" >> ${PublicDnsName}
       - run:
           name: save backend url to memstash.io
           command: |
             curl -H "Content-Type: text/plain" -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" \
               --request PUT --data "https://$PublicDnsName" \
               https://api.memstash.io/values/backend-url
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/.circleci/ansible/inventory.txt
+
       # Here's where you will add some code to rollback on failure
 
 workflows:
