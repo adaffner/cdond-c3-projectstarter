@@ -172,7 +172,7 @@ jobs:
             key: ec2Url
           command: |
             curl -H "Content-Type: text/plain" -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" \
-              --request PUT --data "https://" << cat PublicDnsName >> \
+              --request PUT --data "https://`cat PublicDnsName`"\
               https://api.memstash.io/values/backend-url
       - run:
           name: on error
