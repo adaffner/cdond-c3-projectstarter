@@ -179,7 +179,7 @@ jobs:
               https://api.memstash.io/values/backend-url
       - run:
           name: run on error
-          destroy_environment
+          destroy_environment:
           when: on_fail
 
 workflows:
