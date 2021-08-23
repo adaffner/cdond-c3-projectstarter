@@ -161,11 +161,16 @@ jobs:
           command: |
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicDnsName' \
-              --output text >> $PublicDnsName
-            echo $PublicDnsName
+              --output text >> PublicDnsName.txt
+            cat PublicDnsName.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/.circleci/ansible/PublicDnsName.txt
       - run:
           name: save backend url to memstash.io
           command: |
+            cat PublicDnsName.txt >> $PublicDnsName
             curl -H "Content-Type: text/plain" -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" \
               --request PUT --data "https://$PublicDnsName" \
               https://api.memstash.io/values/backend-url
