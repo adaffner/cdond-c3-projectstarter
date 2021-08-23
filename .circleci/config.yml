@@ -178,9 +178,9 @@ jobs:
               --request PUT --data "https://`cat PublicDnsName`"\
               https://api.memstash.io/values/backend-url
       - run:
-          when:
-            condition: on_fail
-          - destroy_environment
+          name: run on error
+          destroy_environment
+          when: on_fail
 
 workflows:
   default:
