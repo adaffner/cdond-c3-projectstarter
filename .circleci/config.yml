@@ -162,14 +162,14 @@ jobs:
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicDnsName' \
               --output text >> PublicDnsName
-          - save_cache:
-              key: ec2Url
+          save_cache:
+            key: ec2Url
               paths:
                 - ~/project/.circleci/ansible/PublicDnsName
       - run:
           name: save backend url to memstash.io
-          - restore_cache:
-              key: ec2Url
+          restore_cache:
+            key: ec2Url
           command: |
             cat PublicDnsName >> $PublicDnsName
             curl -H "Content-Type: text/plain" -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" \
