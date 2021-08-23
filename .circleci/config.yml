@@ -165,7 +165,7 @@ jobs:
           save_cache:
             key: ec2Url
               paths:
-                - ~/project/.circleci/ansible/PublicDnsName
+                ~/project/.circleci/ansible/PublicDnsName
       - run:
           name: save backend url to memstash.io
           restore_cache:
