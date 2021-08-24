@@ -5,11 +5,15 @@ commands:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
       # Add parameter here.
+    docker:
+      - image: amazon/aws-cli
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
+            yum install tar -y
+            yum install gzip -y
             aws cloudformation delete-stack --stack-name "udacity-frontend-${CIRCLE_WORKFLOW_ID}"
             aws cloudformation delete-stack --stack-name "udacity-backend-${CIRCLE_WORKFLOW_ID}"
 
@@ -192,16 +196,17 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
-            apk add curl
-      - run:
-          name: Install AWS cli
-          command: |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            ./aws/install
+#            apk add curl
+#      - run:
+#          name: Install AWS cli
+#          command: |
+#            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#            unzip awscliv2.zip
+#            ./aws/install
       - run:
           name: Configure server
           command: |
+            cd ~/project/.circleci/ansible/
             ansible-playbook -i inventory.txt configure-server.yml
       # Here's where you will add some code to rollback on failure
       - destroy-environment
