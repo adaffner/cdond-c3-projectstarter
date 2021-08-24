@@ -154,9 +154,9 @@ jobs:
                --query 'Reservations[*].Instances[*].PublicIpAddress' \
                --output text >> inventory.txt
       - persist_to_workspace:
-          root: ~/
+          root: ~/project/.circleci/
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - ansible/inventory.txt
       - run:
           name: get public dns name of ec2 instance
           command: |
@@ -186,14 +186,14 @@ jobs:
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints: ["5e:44:44:31:37:0a:25:8a:9c:f1:38:72:7f:aa:63:c6"]
-      # attach workspace
-      - attach_workspace:
-          at: ~/project/.circleci/ansible/inventory.txt
       - run:
           name: Install dependencies
           command: |
             apk add --update ansible
             pip3 install awscli
+      # attach workspace
+      - attach_workspace:
+          at: ~/project/.circleci/
       - run:
           name: Configure server
           command: |
