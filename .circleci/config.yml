@@ -151,8 +151,8 @@ jobs:
             cd ~/project/.circleci/ansible/
             echo "[web]" > inventory.txt
             aws ec2 describe-instances \
-               --filters "Name=tag_value,Values=Udacity-cdond-project-backend" \
                --query 'Reservations[*].Instances[*].PublicIpAddress' \
+               --filters "Name=tag_value,Values=Udacity-cdond-project-backend" \
                --output text >> inventory.txt
       - persist_to_workspace:
           root: ~/project/.circleci/
