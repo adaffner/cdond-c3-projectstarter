@@ -189,15 +189,16 @@ jobs:
       - attach_workspace:
           at: ~/project/.circleci/ansible/
       - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+            apt install curl
+      - run:
           name: Install AWS cli
           command: |
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update ansible
       - run:
           name: Configure server
           command: |
