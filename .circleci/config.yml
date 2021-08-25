@@ -204,23 +204,50 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment
 
+  run-migrations:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Install pg migrate
+          command: |
+            - npm install node-pg-migrate pg
+      - run:
+          name: Run migrations
+          command: |
+            npm run migrate up > output.txt
+            if grep "has been executed successfully" output.txt; then \
+              curl -H "Content-Type: text/plain" -H "token: 4a79f8c5-dbf1-446c-bbdb-aeb7df391ab5" \
+              --request PUT --data "" \
+              https://api.memstash.io/values/migration-d5d144df-a14a-4d0d-aab3-d2ce1af678b9migration_${CIRCLE_WORKFLOW_ID}; fi
+      - run:
+          name: Send migration results to memstash
+          command: |
+            # Your code here
+            exit 1
+      # Here's where you will add some code to rollback on failure
+
 workflows:
   default:
     jobs:
-#      - build-frontend
-#      - build-backend
-#      - test-frontend:
-#          requires: [build-frontend]
-#      - test-backend:
-#          requires: [build-backend]
-#      - scan-backend:
-#          requires: [build-backend]
-#      - scan-frontend:
-#          requires: [build-frontend]
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
       - deploy-infrastructure:
-#          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           filters:
             branches:
               only: [main]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
