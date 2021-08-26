@@ -199,7 +199,6 @@ jobs:
           name: Configure server
           command: |
             cd ~/project/.circleci/ansible/
-            cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
       # Here's where you will add some code to rollback on failure
       - destroy-environment
@@ -210,11 +209,12 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - add_ssh_keys:
+          fingerprints: [ "5e:44:44:31:37:0a:25:8a:9c:f1:38:72:7f:aa:63:c6" ]
       - run:
           name: Install pg migrate
           command: |
             cd ~/project/backend
-            npm install
             npm install node-pg-migrate pg
       - run:
           name: Run migrations
