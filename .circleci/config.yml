@@ -213,6 +213,7 @@ jobs:
       - run:
           name: Install pg migrate
           command: |
+            cd ~/project/backend
             npm install
             npm install node-pg-migrate pg
       - run:
