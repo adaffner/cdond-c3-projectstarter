@@ -213,7 +213,7 @@ jobs:
       - run:
           name: Install pg migrate
           command: |
-            - npm install node-pg-migrate
+            npm install node-pg-migrate pg
       - run:
           name: Run migrations
           command: |
