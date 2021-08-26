@@ -218,6 +218,7 @@ jobs:
           name: Run migrations
           command: |
             npm run migrate up > output.txt
+            cat output.txt
             if grep "has been executed successfully" output.txt; then \
               curl -H "Content-Type: text/plain" -H "token: 4a79f8c5-dbf1-446c-bbdb-aeb7df391ab5" \
               --request PUT --data "1" \
