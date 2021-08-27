@@ -219,7 +219,8 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            npm run migrate up
+            cd ~/project/.circleci/ansible/
+            ansible-playbook -i inventory.txt deploy-backend.yml
 #            if grep "has been executed successfully" output.txt; then \
 #              curl -H "Content-Type: text/plain" -H "token: 4a79f8c5-dbf1-446c-bbdb-aeb7df391ab5" \
 #              --request PUT --data "1" \
