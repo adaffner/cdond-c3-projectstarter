@@ -212,10 +212,13 @@ jobs:
       - add_ssh_keys:
           fingerprints: [ "5e:44:44:31:37:0a:25:8a:9c:f1:38:72:7f:aa:63:c6" ]
       - run:
-          name: Install pg migrate
+          name: Install dependencies
           command: |
-            cd ~/project/backend
-            npm install node-pg-migrate pg
+            apk add --update ansible
+            pip3 install awscli
+      # attach workspace
+      - attach_workspace:
+          at: ~/project/.circleci/
       - run:
           name: Run migrations
           command: |
@@ -232,7 +235,8 @@ jobs:
             # Your code here
             exit 1
       # Here's where you will add some code to rollback on failure
-
+      - destroy-environment
+      - 
 workflows:
   default:
     jobs:
