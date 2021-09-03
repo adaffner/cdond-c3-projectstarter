@@ -223,7 +223,6 @@ jobs:
       - run:
           name: Run migrations
           command: |
-#            cd ~/node_modules/node-pg-migrate/bin/
             node-pg-migrate up - d ${TYPEORM_HOST}
 #            ansible-playbook -i inventory.txt deploy-backend.yml
 #            if grep "has been executed successfully" output.txt; then \
