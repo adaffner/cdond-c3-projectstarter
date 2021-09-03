@@ -78,6 +78,7 @@ jobs:
           name: Front-end test
           command: |
             cd ~/project/frontend
+            npx envinfo --preset jest
             npm test
 
   test-backend:
@@ -91,6 +92,7 @@ jobs:
           name: Back-end test
           command: |
             cd ~/project/backend
+            npx envinfo --preset jest
             npm test
 
   scan-frontend:
@@ -214,6 +216,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            npm install node-pg-migrate pg
             pip3 install awscli
       # attach workspace
       - attach_workspace:
