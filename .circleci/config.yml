@@ -216,16 +216,14 @@ jobs:
           name: Install dependencies
           command: |
             npm install node-pg-migrate pg
-            npm install aws-cli-js
+            sudo apt-get install postgresql-client
       # attach workspace
       - attach_workspace:
           at: ~/project/.circleci/
       - run:
           name: Run migrations
           command: |
-            pwd
-            find / -name node-pg-migrate
-            node-pg-migrate up
+            node-pg-migrate up - d $TYPEORM_HOST
 #            ansible-playbook -i inventory.txt deploy-backend.yml
 #            if grep "has been executed successfully" output.txt; then \
 #              curl -H "Content-Type: text/plain" -H "token: 4a79f8c5-dbf1-446c-bbdb-aeb7df391ab5" \
