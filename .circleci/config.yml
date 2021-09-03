@@ -214,8 +214,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            npm install node-ansible --save
-            npm audit fix
             pip3 install awscli
       # attach workspace
       - attach_workspace:
