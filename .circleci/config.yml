@@ -223,6 +223,8 @@ jobs:
       - run:
           name: Run migrations
           command: |
+            pwd
+            find / -name node-pg-migrate
             node-pg-migrate up
 #            ansible-playbook -i inventory.txt deploy-backend.yml
 #            if grep "has been executed successfully" output.txt; then \
