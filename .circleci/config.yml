@@ -216,7 +216,7 @@ jobs:
           name: Install dependencies
           command: |
             npm install node-pg-migrate pg
-            npm install -g aws-cli
+            sudo npm install -g aws-cli
       # attach workspace
       - attach_workspace:
           at: ~/project/.circleci/
