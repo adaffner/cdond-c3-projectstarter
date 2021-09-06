@@ -247,7 +247,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh
             cd ~/.nvm/
             nvm.sh
             nvm install node
