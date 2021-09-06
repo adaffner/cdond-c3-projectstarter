@@ -252,8 +252,8 @@ jobs:
           name: Get backend url
           command: |
             # your code here
-            export BACKEND_IP=curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
-              GET https://api.memstash.io/values/backend-url
+            export BACKEND_IP="curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
+              GET https://api.memstash.io/values/backend-url"
             echo "${BACKEND_IP}"
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
