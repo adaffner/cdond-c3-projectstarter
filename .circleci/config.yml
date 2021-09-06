@@ -247,7 +247,11 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # your code here
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+            cd ~/.nvm/
+            nvm.sh
+            nvm install node
+            node -e "console.log('Running Node.js ' + process.version)"
       - run:
           name: Get backend url
           command: |
@@ -255,7 +259,7 @@ jobs:
             export BACKEND_IP=`curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
               GET https://api.memstash.io/values/backend-url`
             echo "${BACKEND_IP}"
-            export API_URL="http://${BACKEND_IP}:3030"
+            export API_URL="${BACKEND_IP}:3030"
             echo "${API_URL}"
       - run:
           name: Deploy frontend objects
