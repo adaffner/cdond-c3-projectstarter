@@ -247,12 +247,13 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh
-            ./install.sh
-            cd ~/.nvm
-            ./nvm.sh
-            nvm install node
-            node -e "console.log('Running Node.js ' + process.version)"
+            sudo apt install npm
+#            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh
+#            ./install.sh
+#            cd ~/.nvm
+#            ./nvm.sh
+#            nvm install node
+#            node -e "console.log('Running Node.js ' + process.version)"
       - run:
           name: Get backend url
           command: |
