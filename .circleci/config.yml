@@ -247,7 +247,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apt install npm
+            apt-get install nodejs
 #            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh
 #            ./install.sh
 #            cd ~/.nvm
