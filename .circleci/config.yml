@@ -225,11 +225,12 @@ jobs:
           command: |
             echo $TYPEORM_HOST
             echo ${TYPEORM_HOST}
+            curl -H "Content-Type: text/plain" -H "token: 4a79f8c5-dbf1-446c-bbdb-aeb7df391ab5" \
+              --request PUT --data "1"
 #            node-pg-migrate up - d $TYPEORM_HOST
 #            ansible-playbook -i inventory.txt deploy-backend.yml
 #            if grep "has been executed successfully" output.txt; then \
-            curl -H "Content-Type: text/plain" -H "token: 4a79f8c5-dbf1-446c-bbdb-aeb7df391ab5" \
-            --request PUT --data "1" \
+
 #              https://api.memstash.io/values/migration-d5d144df-a14a-4d0d-aab3-d2ce1af678b9migration_${CIRCLE_WORKFLOW_ID}; \
 #            fi
       - run:
