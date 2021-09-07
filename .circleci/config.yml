@@ -43,6 +43,7 @@ jobs:
           name: Build front-end
           command: |
             cd ~/project/frontend
+            export API_URL=""
             npm install
             npm run lint
             npm run build
@@ -78,7 +79,6 @@ jobs:
           name: Front-end test
           command: |
             cd ~/project/frontend
-            export API_URL=""
             npm audit fix --force
             npm run test
 
