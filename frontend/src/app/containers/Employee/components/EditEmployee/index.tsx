@@ -41,7 +41,7 @@ export namespace EditEmployee {
     displayName: string;
     companyEmail: string;
     personalEmail: string;
-    birthdate: Date;
+    birthdate: string;
     phoneNumber: string;
     address: string;
     tags: Array<any>;
@@ -50,7 +50,7 @@ export namespace EditEmployee {
     city: string;
     salary: number;
     salaryType: SalaryType;
-    effectiveDate: Date;
+    effectiveDate: string;
     isActive: boolean;
   }
 }
