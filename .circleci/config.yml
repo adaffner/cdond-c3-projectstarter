@@ -76,9 +76,9 @@ jobs:
       - run:
           name: Front-end test
           command: |
-            cd ~/project/frontend
-            npm run test
+            cd ~/project/frontend/node_modules
             npm audit fix --force
+            npm run test
 
   test-backend:
     docker:
@@ -90,7 +90,7 @@ jobs:
       - run:
           name: Back-end test
           command: |
-            cd ~/project/backend
+            cd ~/project/backend/node_modules
             npm audit fix --force
             npm run test
 
