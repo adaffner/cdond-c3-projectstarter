@@ -244,10 +244,10 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-#      - run:
-#          name: Install dependencies
-#          command: |
-#            yum upgrade -y npm
+      - run:
+          name: Install dependencies
+          command: |
+            python -m pip install awscli
       - run:
           name: Get backend url
           command: |
@@ -260,6 +260,7 @@ jobs:
       - run:
           name: Deploy frontend objects
           command: |
+            cd ~/project/frontend
             npm run build
       # Here's where you will add some code to rollback on failure
       - destroy-environment
