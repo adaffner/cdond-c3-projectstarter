@@ -78,6 +78,7 @@ jobs:
           name: Front-end test
           command: |
             cd ~/project/frontend
+            export API_URL=""
             npm audit fix --force
             npm run test
 
