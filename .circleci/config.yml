@@ -74,12 +74,15 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
+          name: Fix audit failures
+          command: |
+            cd ~/project/frontend
+            npm audit fix --force
+      - run:
           name: Front-end test
           command: |
             cd ~/project/frontend
-            npm update jest
             npm run test
-            npm audit fix --force
 
   test-backend:
     docker:
