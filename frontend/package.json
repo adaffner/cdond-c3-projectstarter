@@ -107,6 +107,7 @@
     "sweetalert2": "^8.13.4"
   },
   "jest": {
+    "verbose": true,
     "rootDir": "src",
     "coverageDirectory": "../coverage",
     "collectCoverage": true,
