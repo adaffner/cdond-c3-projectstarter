@@ -24,12 +24,11 @@ commands:
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS = 1
-            if(( $SUCCESS==1 )); 
+            if(( $SUCCESS == false ));
             then
-            #  cd ~/project/backend
-            #  npm install
-            #  Add revert code here. You can find this in the Getting Started section.
-              exit 1
+              cd ~/project/backend
+              npm install
+              npm run migrations:revert
             fi
             
 jobs:
@@ -211,47 +210,59 @@ jobs:
       - add_ssh_keys:
           fingerprints: [ "5e:44:44:31:37:0a:25:8a:9c:f1:38:72:7f:aa:63:c6" ]
       - run:
-          name: Install dependencies
+          name: Install awscli
           command: |
-            npm install node-pg-migrate
-            npm install postgresql-client
+            sudo apt-get -y -qq update
+            sudo apt-get -qq install awscli
+            sudo apt-get - y -qq install python3
       # attach workspace
       - attach_workspace:
           at: ~/project/.circleci/
       - run:
           name: Run migrations
           command: |
-            echo "${TYPEORM_HOST}"
+            cd ~/project/backend
+            touch output.txt
+            npm run migrations > output.txt
+            cat output.txt
 #            node-pg-migrate up - d $TYPEORM_HOST
 #            ansible-playbook -i inventory.txt deploy-backend.yml
-#            if grep "has been executed successfully" output.txt; then \
+#
 
 #              https://api.memstash.io/values/migration-d5d144df-a14a-4d0d-aab3-d2ce1af678b9migration_${CIRCLE_WORKFLOW_ID}; \
 #            fi
       - run:
           name: Send migration results to memstash
           command: |
-            echo "${CIRCLE_WORKFLOW_ID}"
+            cd ~/project/backend
             curl -H "Content-Type: text/plain" -H "token: 4a79f8c5-dbf1-446c-bbdb-aeb7df391ab5" \
-              --request PUT --data "1" \
+              --request PUT --data "false" \
               https://api.memstash.io/values/${CIRCLE_WORKFLOW_ID}
+            if grep "has been executed successfully" output.txt; then \
+              echo "DB migration sucessful"
+              curl -H "Content-Type: text/plain" -H "token: 4a79f8c5-dbf1-446c-bbdb-aeb7df391ab5" \
+                --request PUT --data "true" \
+                https://api.memstash.io/values/${CIRCLE_WORKFLOW_ID}
+            fi
+      - revert-migrations
       # Here's where you will add some code to rollback on failure
       - destroy-environment
 
   deploy-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: amazon/aws-cli
     steps:
       # Checkout code from git
       - checkout
       - run:
           name: Install dependencies
           command: |
-            npm install aws-cli
+            yum -y install tar gzip
+            curl -sL https://rpm.nodesource.com/setup_lts.x | bash -
+            yum -y install nodejs
       - run:
           name: Get backend url
           command: |
-            # your code here
             export BACKEND_IP=`curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
               GET https://api.memstash.io/values/backend-url`
             echo "${BACKEND_IP}"
@@ -261,7 +272,11 @@ jobs:
           name: Deploy frontend objects
           command: |
             cd ~/project/frontend
+            npm install
             npm run build
+            aws s3 cp ./dist s3://udapeople-${CIRCLE_WORKFLOW_ID} --recursive
+            npm install webpack-dev-server -g
+      - revert-migrations
       # Here's where you will add some code to rollback on failure
       - destroy-environment
 
