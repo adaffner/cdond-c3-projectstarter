@@ -77,7 +77,7 @@ jobs:
           name: Front-end test
           command: |
             cd ~/project/frontend
-            npm install
+#            npm install
             npm audit fix --force
             npm run test
 
@@ -92,7 +92,7 @@ jobs:
           name: Back-end test
           command: |
             cd ~/project/backend
-            npm install
+#            npm install
             npm audit fix --force
             npm run test
 
