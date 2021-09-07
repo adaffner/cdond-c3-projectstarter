@@ -93,6 +93,7 @@ jobs:
           command: |
             cd ~/project/backend
             npm install
+            npm audit fix --force
             npm test
 
   scan-frontend:
@@ -120,6 +121,7 @@ jobs:
           name: Backend-end scan
           command: |
             cd ~/project/backend
+            npm audit fix --force
             npm audit --audit-level=critical
 
   deploy-infrastructure:
