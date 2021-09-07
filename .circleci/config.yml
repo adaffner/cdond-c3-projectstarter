@@ -226,6 +226,7 @@ jobs:
             cd ~/project/backend
             npm install
             npm run build
+            npm audit fix
             npm run migrations > output.txt
             cat output.txt
       - run:
