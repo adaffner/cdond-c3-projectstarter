@@ -74,10 +74,13 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
+          name: Install dependencies
+          command: |
+            npm update jest
+      - run:
           name: Front-end test
           command: |
             cd ~/project/frontend
-            npm update -g jest
             npm run test
             npm audit fix --force
 
