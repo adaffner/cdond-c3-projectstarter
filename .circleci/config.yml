@@ -74,14 +74,10 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: Fix audit failures
-          command: |
-            cd ~/project/frontend
-            npm audit fix 
-      - run:
           name: Front-end test
           command: |
             cd ~/project/frontend
+            npm audit fix --force
             npm run test
 
   test-backend:
@@ -95,7 +91,6 @@ jobs:
           name: Back-end test
           command: |
             cd ~/project/backend
-            npm audit fix --force
             npm run test
 
   scan-frontend:
