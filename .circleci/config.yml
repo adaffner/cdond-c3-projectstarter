@@ -214,7 +214,7 @@ jobs:
           command: |
             sudo apt-get -y -qq update
             sudo apt-get -qq install awscli
-            sudo apt-get - y -qq install python3
+            sudo apt-get -y -qq install python3
       # attach workspace
       - attach_workspace:
           at: ~/project/.circleci/
