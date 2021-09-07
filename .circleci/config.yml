@@ -77,8 +77,8 @@ jobs:
           name: Front-end test
           command: |
             cd ~/project/frontend
-            npm audit fix --force
             npm run test
+            npm audit fix --force
 
   test-backend:
     docker:
