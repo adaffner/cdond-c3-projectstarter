@@ -77,7 +77,7 @@ jobs:
           name: Front-end test
           command: |
             cd ~/project/frontend
-            npm upgrade
+            npm update -g jest
             npm run test
             npm audit fix --force
 
