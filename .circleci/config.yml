@@ -45,6 +45,7 @@ jobs:
             cd ~/project/frontend
             npm install
             npm run lint
+            npm run build
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -62,6 +63,7 @@ jobs:
             cd ~/project/backend
             npm install
             npm run lint
+            npm run build
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -78,7 +80,6 @@ jobs:
           command: |
             cd ~/project/frontend
             npm install
-            npm audit fix --force
             npm test
 
   test-backend:
