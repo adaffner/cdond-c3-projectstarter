@@ -77,6 +77,7 @@ jobs:
           name: Front-end test
           command: |
             cd ~/project/frontend
+            npm install
             npm test
 
   test-backend:
@@ -90,6 +91,7 @@ jobs:
           name: Back-end test
           command: |
             cd ~/project/backend
+            npm install
             npm test
 
   scan-frontend:
@@ -222,15 +224,8 @@ jobs:
           name: Run migrations
           command: |
             cd ~/project/backend
-            touch output.txt
             npm run migrations > output.txt
             cat output.txt
-#            node-pg-migrate up - d $TYPEORM_HOST
-#            ansible-playbook -i inventory.txt deploy-backend.yml
-#
-
-#              https://api.memstash.io/values/migration-d5d144df-a14a-4d0d-aab3-d2ce1af678b9migration_${CIRCLE_WORKFLOW_ID}; \
-#            fi
       - run:
           name: Send migration results to memstash
           command: |
