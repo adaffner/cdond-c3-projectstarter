@@ -78,6 +78,7 @@ jobs:
           command: |
             cd ~/project/frontend
             npm install
+            npm audit fix --force
             npm run test
 
   test-backend:
