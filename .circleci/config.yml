@@ -77,7 +77,7 @@ jobs:
           name: Fix audit failures
           command: |
             cd ~/project/frontend
-            npm audit fix --force
+            npm audit fix 
       - run:
           name: Front-end test
           command: |
