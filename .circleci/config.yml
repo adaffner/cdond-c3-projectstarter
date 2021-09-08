@@ -77,8 +77,6 @@ jobs:
           name: Front-end test
           command: |
             cd ~/project/frontend/
-            npm install --save-dev jest
-            npm audit fix --force
             npm run test
 
   test-backend:
