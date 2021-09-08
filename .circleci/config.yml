@@ -279,6 +279,33 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment
 
+  deploy-backend:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      # Checkout code from git
+      - checkout
+      # Add ssh keys with fingerprint
+      - add_ssh_keys:
+          fingerprints: [ "5e:44:44:31:37:0a:25:8a:9c:f1:38:72:7f:aa:63:c6" ]
+      # attach workspace
+      - attach_workspace:
+          at: ~/project/.circleci/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+            apk add --update tar gzip curl nodejs npm
+            pip3 install awscli
+      - run:
+          name: Deploy backend
+          command: |
+            cd ~/project/.circleci/ansible/
+            ansible-playbook -i inventory.txt deploy-backend.yml
+      # Here's where you will add some code to rollback on failure
+      - revert-migrations
+      - destroy-environment
+
 workflows:
   default:
     jobs:
@@ -304,3 +331,5 @@ workflows:
           requires: [configure-infrastructure]
       - deploy-frontend:
           requires: [run-migrations]
+      - deploy-backend:
+          requires: [ run-migrations ]
