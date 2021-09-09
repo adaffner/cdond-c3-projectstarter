@@ -61,7 +61,6 @@ jobs:
           command: |
             cd ~/project/backend
             npm install all
-            npm audit fix --force
             npm run build
       - save_cache:
           paths: [backend/node_modules]
