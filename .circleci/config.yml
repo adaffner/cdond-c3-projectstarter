@@ -248,7 +248,9 @@ jobs:
           command: |
             cd ~/project/backend
             npm install
-            npm audit fix
+            echo "So weit komme ich"
+            npm audit fix --force
+            echo "Komme ich weiter"
             npm run migrations > output.txt
             cat output.txt
       - run:
