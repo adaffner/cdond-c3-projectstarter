@@ -108,7 +108,7 @@ jobs:
             npm install
             npm audit fix --audit-level=critical --force
       - save_cache:
-        paths: [ frontend/node_modules ]
+        paths: [frontend/node_modules]
         key: frontend-scan
 
   scan-backend:
