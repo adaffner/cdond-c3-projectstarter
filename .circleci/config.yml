@@ -100,12 +100,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [frontend-scan]
       - run:
           name: Front-end scan
           command: |
             cd ~/project/frontend
-            npm audit fix --audit-level=critical
+            npm install
+            npm audit fix --audit-level=critical --force
+      - save_cache:
+        paths: [ frontend/node_modules ]
+        key: frontend-scan
 
   scan-backend:
     docker:
