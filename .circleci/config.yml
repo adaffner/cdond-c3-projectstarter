@@ -94,6 +94,7 @@ jobs:
           name: Back-end test
           command: |
             cd ~/project/backend/
+            npm install typescript
             npm audit fix
             npm run test
       - save_cache:
@@ -128,6 +129,7 @@ jobs:
           name: Backend-end scan
           command: |
             cd ~/project/backend
+            npm install
             npm audit --audit-level=critical
 
   deploy-infrastructure:
