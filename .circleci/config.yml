@@ -43,6 +43,7 @@ jobs:
           name: Build front-end
           command: |
             cd ~/project/frontend
+            npm install oauth-sign@"0.9.0"
             npm install
             npm run build
       - save_cache:
