@@ -261,10 +261,10 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND_IP=`curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
+            export BACKEND_URL=`curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
               GET https://api.memstash.io/values/backend-url`
-            echo "${BACKEND_IP}"
-            export API_URL="${BACKEND_IP}:3030"
+            echo "${BACKEND_URL}"
+            export API_URL="${BACKEND_URL}:3030"
             echo "${API_URL}"
       - run:
           name: Deploy frontend objects
@@ -305,6 +305,66 @@ jobs:
       - revert-migrations
       - destroy-environment
 
+  smoke-test:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update tar gzip curl
+            apk add --update nodejs
+            pip3 install awscli
+      - run:
+          name: Get backend url
+          command: |
+            BACKEND_URL=`curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
+              GET https://api.memstash.io/values/backend-url`
+      - run:
+          name: Backend smoke test.
+          command: |
+            URL="${BACKEND_URL}:3030/api/status"
+            echo $URL
+            curl $URL
+      - run:
+          name: Frontend smoke test.
+          command: |
+            FRONTEND_URL="http://udapeople-${CIRCLE_WORKFLOW_ID}.s3-website-us-east-1.amazonaws.com"
+            echo $FRONTEND_URL
+            if curl -s ${FRONTEND_URL} | grep "Welcome"
+            then
+              return 1
+            else
+              return 0
+            fi
+      # Here's where you will add some code to rollback on failure
+      - revert-migrations
+      - destroy-environment
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update curl tar gzip
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            cd ~/project/.circleci/files
+            CF_STACK_ID=`aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --no-paginate \
+              --output text`
+            aws cloudformatin deploy \
+            -- template-file cloudfront.yml \
+            -- stack-name \
+            -- parameter-overrides WorkflowID="${CF_STACK_ID}" \
+            -- tags project=udapeople
+      # Here's where you will add some code to rollback on failure
+
 workflows:
   default:
     jobs:
@@ -320,7 +380,6 @@ workflows:
           requires: [build-frontend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-#          requires: [scan-frontend, scan-backend]
           filters:
             branches:
               only: [main]
@@ -332,3 +391,5 @@ workflows:
           requires: [run-migrations]
       - deploy-backend:
           requires: [ run-migrations ]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
