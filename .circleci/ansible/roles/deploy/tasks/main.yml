@@ -41,7 +41,7 @@
 - name: "Copy backend build to server"
   become: yes
   unarchive:
-    src: ~/project/backend/backend.tar.gz
+    src: ~/project/.circleci/ansible/backend.tar.gz
     dest: /home/ubuntu/
     owner: ubuntu
 
