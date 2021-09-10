@@ -320,7 +320,6 @@ jobs:
           name: Deploy backend
           command: |
             cd ~/project/.circleci/ansible/
-#            tar cvzf backend.tar.gz ~/project/backend/
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure
       - revert-migrations
