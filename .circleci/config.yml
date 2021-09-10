@@ -292,7 +292,7 @@ jobs:
             cd ~/project/frontend
             npm install
             npm run build
-            aws s3 cp ./dist s3://udapeople-${CIRCLE_WORKFLOW_ID} --recursive
+            aws s3 cp ./dist s3://udapeople-ymjvctz29a0smouk7o4i --recursive
             npm install webpack-dev-server -g
       - revert-migrations
       # Here's where you will add some code to rollback on failure
@@ -320,6 +320,7 @@ jobs:
           name: Deploy backend
           command: |
             cd ~/project/.circleci/ansible/
+            tar cvzf backend.tar.gz ~/project/backend/dist
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure
       - revert-migrations
