@@ -1,21 +1,18 @@
 - name: "update apt packages."
   become: yes
   apt:
-  include_vars:
-  update_cache: yes
+    update_cache: yes
 
 - name: "upgrade packages"
   become: yes
   apt:
-  include_vars:
-  upgrade: yes
+    upgrade: yes
 
 - name: "install dependencies now"
   become: yes
   apt:
     name: ["nodejs", "npm"]
     state: latest
-    include_tasks:
     update_cache: yes
 
 - name: "install pm2"
@@ -24,7 +21,6 @@
     name: pm2
     global: yes
     production: yes
-    include_vars:
     state: present
 
 - name: "install typescript"
@@ -33,7 +29,6 @@
     name: typescript
     global: yes
     production: yes
-    include_vars:
     state: present
 
 - name: "update dependancies"
@@ -46,18 +41,16 @@
 - name: "Copy backend build to server"
   become: yes
   unarchive:
-  src: ~/project/backend.tar.gz
-  dest: /home/ubuntu/
-  include_vars:
-  owner: ubuntu
+    src: ~/project/backend.tar.gz
+    dest: /home/ubuntu/
+    owner: ubuntu
 
 - name: "Copy package.json to server"
   become: yes
   copy:
-  src: ~/project/backend/package.json
-  dest: /home/ubuntu/
-  include_vars:
-  owner: ubuntu
+    src: ~/project/backend/package.json
+    dest: /home/ubuntu/
+    owner: ubuntu
 
 - name: Build
   become: true
