@@ -1,38 +1,42 @@
----
 - name: "update apt packages."
   become: yes
   apt:
+  include_vars:
   update_cache: yes
 
 - name: "upgrade packages"
   become: yes
   apt:
+  include_vars:
   upgrade: yes
 
-- name: "install dependencies."
+- name: "install dependencies now"
   become: yes
   apt:
-  name: ["nodejs", "npm"]
-  state: latest
-  update_cache: yes
+    name: ["nodejs", "npm"]
+    state: latest
+    include_tasks:
+    update_cache: yes
 
 - name: "install pm2"
   become: yes
   npm:
-  name: pm2
-  global: yes
-  production: yes
-  state: present
+    name: pm2
+    global: yes
+    production: yes
+    include_vars:
+    state: present
 
 - name: "install typescript"
   become: yes
   npm:
-  name: typescript
-  global: yes
-  production: yes
-  state: present
+    name: typescript
+    global: yes
+    production: yes
+    include_vars:
+    state: present
 
-- name: " update dependancies"
+- name: "update dependancies"
   become: true
   shell: |
     curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
@@ -44,6 +48,7 @@
   unarchive:
   src: ~/project/backend.tar.gz
   dest: /home/ubuntu/
+  include_vars:
   owner: ubuntu
 
 - name: "Copy package.json to server"
@@ -51,6 +56,7 @@
   copy:
   src: ~/project/backend/package.json
   dest: /home/ubuntu/
+  include_vars:
   owner: ubuntu
 
 - name: Build
