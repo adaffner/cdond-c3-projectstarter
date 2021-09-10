@@ -41,7 +41,7 @@
 - name: "Copy backend build to server"
   become: yes
   unarchive:
-    src: ~/project/backend.tar.gz
+    src: ~/project/backend/dist
     dest: /home/ubuntu/
     owner: ubuntu
 
