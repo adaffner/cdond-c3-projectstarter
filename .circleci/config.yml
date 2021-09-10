@@ -22,8 +22,8 @@ commands:
           name: Revert migrations
           # Add when this will run
           command: |
-            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS = 1
+            SUCCESS=`curl -H "token: 4a79f8c5-dbf1-446c-bbdb-aeb7df391ab5" --request GET \
+              https://api.memstash.io/values/migration-d5d144df-a14a-4d0d-aab3-d2ce1af678b9`
             if(( $SUCCESS == false ));
             then
               cd ~/project/backend
