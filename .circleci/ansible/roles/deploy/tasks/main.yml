@@ -56,6 +56,7 @@
   become: true
   shell: |
     cd /home/ubuntu/backend
+    ls -l
     npm install
     npm fund
     npm run build
