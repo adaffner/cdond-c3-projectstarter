@@ -320,7 +320,7 @@ jobs:
           name: Deploy backend
           command: |
             cd ~/project/.circleci/ansible
-            tar -C backend -czvf artifact.tar.gz .
+            tar -C ~/project/backend -czvf artifact.tar.gz .
             pwd
             ls -lisa
             ansible-playbook -i inventory.txt deploy-backend.yml
