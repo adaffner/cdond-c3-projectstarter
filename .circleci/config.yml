@@ -299,7 +299,7 @@ jobs:
             npm install webpack-dev-server -g
       - revert-migrations
       # Here's where you will add some code to rollback on failure
-#      - destroy-environment
+      - destroy-environment
 
   deploy-backend:
     docker:
@@ -328,7 +328,7 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure
       - revert-migrations
-      - destroy-environment
+#      - destroy-environment
 
   smoke-test:
     docker:
