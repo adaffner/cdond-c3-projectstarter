@@ -321,6 +321,8 @@ jobs:
           command: |
             cd ~/project/.circleci/ansible
             tar -C backend -czvf artifact.tar.gz .
+            pwd
+            ls -lisa
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure
       - revert-migrations
