@@ -51,14 +51,11 @@
     dest: /home/ubuntu/
     owner: ubuntu
 
-- name: Build
+- name: "build package"
   become: true
-  shell: |
-    cd /home/ubuntu/backend
-    ls -l
-    npm install
-    npm fund
-    npm run build
+  command: npm run build
+    args:
+    chdir: /home/ubuntu/backend
 
 - name: "export .env"
   become: yes
@@ -68,11 +65,11 @@
     export TYPEORM_USERNAME="{{ lookup('env', 'TYPEORM_USERNAME') }}"
     export TYPEORM_PASSWORD="{{ lookup('env', 'TYPEORM_PASSWORD') }}"
     export TYPEORM_DATABASE="{{ lookup('env', 'TYPEORM_DATABASE') }}"
-- name: Executing node
+
+- name: "Executing node"
   become: true
   shell: |
     cd /home/ubuntu/backend
-    pm2 start --name backend npm -- start
-    npm run start:prod
-    pm2 ls
+    pm2 start npm --name backend -- run start
+    npm run start
 
