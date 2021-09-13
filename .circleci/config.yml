@@ -187,7 +187,7 @@ jobs:
           command: |
             cat PublicDnsName
             curl -H "Content-Type: text/plain" -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" \
-              --request PUT --data "https://`cat PublicDnsName`"\
+              --request PUT --data `cat PublicDnsName` \
               https://api.memstash.io/values/backend-url
       - destroy-environment
 
@@ -346,7 +346,7 @@ jobs:
           command: |
             BACKEND_URL=`curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
               GET https://api.memstash.io/values/backend-url`
-            curl ${BACKEND_URL}:3030/api/status
+            curl "https://${BACKEND_URL}:3030/api/status"
       - run:
           name: Frontend smoke test.
           command: |
