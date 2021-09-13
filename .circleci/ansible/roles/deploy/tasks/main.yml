@@ -54,8 +54,8 @@
 - name: "build package"
   become: true
   command: npm run build
-    args:
-      chdir: /home/ubuntu/backend
+  args:
+    chdir: /home/ubuntu/backend
 
 - name: "export .env"
   become: yes
