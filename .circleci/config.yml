@@ -328,7 +328,7 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure
       - revert-migrations
-#      - destroy-environment
+      - destroy-environment
 
   smoke-test:
     docker:
@@ -363,6 +363,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - revert-migrations
       - destroy-environment
+
   cloudfront-update:
     docker:
       - image: amazon/aws-cli

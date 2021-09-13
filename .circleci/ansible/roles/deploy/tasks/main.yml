@@ -62,7 +62,7 @@
 - name: start pm2 service.
   command: pm2 start -f ./main.js
   args:
-    chdir: /home/ubuntu/
+    chdir: /home/ubuntu/dist
   environment:
     ENVIRONMENT: production
     TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
