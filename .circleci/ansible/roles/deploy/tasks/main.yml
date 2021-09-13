@@ -59,19 +59,19 @@
     npm fund
     npm run build
 
-- name: "export .env"
-  become: yes
-  shell: |
-    export TYPEORM_HOST="{{ lookup('env', 'TYPEORM_HOST') }}"
-    export TYPEORM_ENTITIES="{{ lookup('env', 'TYPEORM_ENTITIES') }}"
-    export TYPEORM_USERNAME="{{ lookup('env', 'TYPEORM_USERNAME') }}"
-    export TYPEORM_PASSWORD="{{ lookup('env', 'TYPEORM_PASSWORD') }}"
-    export TYPEORM_DATABASE="{{ lookup('env', 'TYPEORM_DATABASE') }}"
-
-- name: "Executing node"
-  become: true
-  shell: |
-    cd /home/ubuntu/backend
-    pm2 start --name backend npm -- start
-    npm run start
+- name: start pm2 service.
+  command: pm2 start -f ./main.js
+  args:
+    chdir: /home/ubuntu/
+  environment:
+    ENVIRONMENT: production
+    TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
+    TYPEORM_MIGRATIONS_DIR: "./migrations"
+    TYPEORM_MIGRATIONS: "./migrations/*.js"
+    TYPEORM_ENTITIES: "./modules/domain/**/*.entity.js"
+    TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST') }}"
+    TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+    TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
+    TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
+    TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
 
