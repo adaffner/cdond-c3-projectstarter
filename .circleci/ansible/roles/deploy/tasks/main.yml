@@ -51,11 +51,13 @@
     dest: /home/ubuntu/
     owner: ubuntu
 
-- name: "build package"
+- name: Build
   become: true
-  command: npm run build
-  args:
-    chdir: /home/ubuntu/
+  shell: |
+    cd /home/ubuntu/backend
+    npm install
+    npm fund
+    npm run build
 
 - name: "export .env"
   become: yes
