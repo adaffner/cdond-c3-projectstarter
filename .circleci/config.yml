@@ -373,7 +373,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl tar gzip
+            yum -y install curl tar gzip
       - run:
           name: Update cloudfront distribution
           command: |
