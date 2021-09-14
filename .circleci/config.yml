@@ -409,15 +409,24 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
-            # your code here
-            export OldWorkflowID="the id here"
-            export STACKS=[] #put the list of stacks here
+            OLDWORKFLOWID=`curl -H "token: 930727e1-9c54-4501-a973-923d8093d161" \
+              --request GET https://api.memstash.io/values/WorkflowID`
+            LIST_OF_STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+              --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
+            CURRENTWORKFLOWID=${CIRCLE_WORKFLOW_ID:0:7}
+            echo "old = $OLDWORKFLOWID"
+            echo "current = $CURRENTWORKFLOWID"
+            export OLDWORKFLOWID=$OLDWORKFLOWID
+            export STACKS=[`echo $LIST_OF_STACKS`] #put the list of stacks here
       - run:
           name: Remove old stacks and files
           command: |
-            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            if [[ "${LIST_OF_STACKS[@]}" =~ "${OLDWORKFLOWID}" ]]
             then
-              # your code here
+              echo "OLDWORKFLOWID!=$OLDWORKFLOWID => will delete old version"
+              aws s3 rm s3://udapeople-$OldWorkflowID --recursive
+              aws cloudformation delete-stack --stack-name udapeople-backend-$OLDWORKFLOWID
+              aws cloudformation delete-stack --stack-name udapeople-frontend-$OLDWORKFLOWID
             fi
 
 workflows:
@@ -450,5 +459,5 @@ workflows:
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
           requires: [smoke-test]
-#      - cleanup:
-#          requires: [cloudfront-update]
+      - cleanup:
+          requires: [cloudfront-update]
