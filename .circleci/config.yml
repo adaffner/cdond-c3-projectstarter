@@ -407,7 +407,7 @@ jobs:
           command: |
             yum -y install tar gzip
       - run:
-          name: Get old stack workflow id
+          name: Get old stack workflow id and remove it
           command: |
             OLDWORKFLOWID=`curl -H "token: 930727e1-9c54-4501-a973-923d8093d161" \
               --request GET https://api.memstash.io/values/WorkflowID`
@@ -418,16 +418,15 @@ jobs:
             echo "current = $CURRENTWORKFLOWID"
             export OLDWORKFLOWID=$OLDWORKFLOWID
             export STACKS=[`echo $LIST_OF_STACKS`] #put the list of stacks here
-      - run:
-          name: Remove old stacks and files
-          command: |
             if [[ "${LIST_OF_STACKS[@]}" =~ "${OLDWORKFLOWID}" ]]
             then
-              echo "OLDWORKFLOWID!=$OLDWORKFLOWID => will delete old version"
+              echo "OLDWORKFLOWID!=$CURRENTWORKFLOWID => will delete old version"
               aws s3 rm s3://udapeople-$OldWorkflowID --recursive
               aws cloudformation delete-stack --stack-name udapeople-backend-$OLDWORKFLOWID
               aws cloudformation delete-stack --stack-name udapeople-frontend-$OLDWORKFLOWID
             fi
+      - revert-migrations
+      - destroy-environment
 
 workflows:
   default:
