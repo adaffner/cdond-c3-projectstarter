@@ -410,11 +410,9 @@ jobs:
           name: Get old stack workflow id and remove it
           command: |
             export OldWorkflowID=$(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-              --filters "Name=tag-value,Values=udacity" \
               --no-paginate --output text)
             echo "${OldWorkflowID}"
-            export STACKS=$(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
-              --filters "Name=tag-value,Values=udacity" \
+            export STACKS=$(aws cloudformation list-stacks --query "StackSummaries[?starts_with(StackName 'udacity')].StackName" \
               --stack-status-filter CREATE_COMPLETE --no-paginate --output text)
             echo "${STACKS}"
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]; then
