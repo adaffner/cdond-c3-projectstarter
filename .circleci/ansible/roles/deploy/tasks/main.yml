@@ -99,7 +99,7 @@
 - name: "add node exporter configuration."
   become: true
   copy:
-    src: node_exporter.service
+    src: ~/project/.circleci/ansible/deploy/files/node_exporter.service
     dest: /etc/systemd/system/
 
 - name: configure systemd to use service
