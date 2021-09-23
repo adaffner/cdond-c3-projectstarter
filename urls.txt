@@ -1,2 +1,0 @@
-https://github.com/adaffner/cdond-c3-projectstarter.git
-
