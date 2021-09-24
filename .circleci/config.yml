@@ -286,9 +286,9 @@ jobs:
           command: |
             export BACKEND_URL=`curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
               GET https://api.memstash.io/values/backend-url`
-            echo "${BACKEND_URL}"
-            export API_URL="${BACKEND_URL}:3030"
-            echo "${API_URL}"
+            echo "Dies ist die Backend-URL: ${BACKEND_URL}"
+            export API_URL="http://${BACKEND_URL}:3030"
+            echo "Dies ist die API-URL: ${API_URL}"
       - run:
           name: Deploy frontend objects
           command: |

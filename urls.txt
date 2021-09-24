@@ -3,7 +3,7 @@ https://github.com/adaffner/cdond-c3-projectstarter.git
 S3-URL:
 https://udapeople-ecbaf645-ca6e-4c98-942d-bcc4d39990f8.s3.amazonaws.com/index.html
 Cloudfront-URL:
-https://d1a0064b5tz962.cloudfront.net
+http://d1a0064b5tz962.cloudfront.net
 Backend-URL:
 http://ec2-54-84-48-128.compute-1.amazonaws.com:3030/api/status
 Prometheus-URL:
