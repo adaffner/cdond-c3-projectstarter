@@ -73,6 +73,7 @@ jobs:
             npm install standard-version@9.3.1
             npm install ts-jest@27.0.4
             npm install all
+            npm audit fix
             npm run build
       - save_cache:
           paths: [backend/node_modules]
