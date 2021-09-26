@@ -361,9 +361,9 @@ jobs:
             echo $FRONTEND_URL
             if curl -s ${FRONTEND_URL} | grep "Welcome"
             then
-              return 1
-            else
               return 0
+            else
+              return 1
             fi
       # Here's where you will add some code to rollback on failure
       - revert-migrations
