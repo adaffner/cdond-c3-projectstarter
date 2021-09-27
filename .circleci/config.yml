@@ -288,6 +288,7 @@ jobs:
               GET https://api.memstash.io/values/backend-url`
             echo "Dies ist die Backend-URL: ${BACKEND_URL}"
             export API_URL="http://${BACKEND_URL}:3030"
+            echo API_URL="http://${BACKEND_IP}:3030" >> "frontend/.env"
             echo "Dies ist die API-URL: ${API_URL}"
       - run:
           name: Deploy frontend objects
