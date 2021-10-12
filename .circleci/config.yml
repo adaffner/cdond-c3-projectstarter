@@ -338,7 +338,7 @@ jobs:
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
             tar -C ~/project/backend -czvf artifact.tar.gz .
             mv artifact.tar.gz ~/project/backend
-            ansible-playbook -i inventory.txt deploy-backend.yml
+            ansible-playbook -i inventory.txt ~/project/.circleci/ansible/deploy-backend.yml
       - run:
           name: Configure prometheus
           command: |
