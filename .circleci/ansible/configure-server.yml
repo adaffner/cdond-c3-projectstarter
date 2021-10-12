@@ -26,7 +26,7 @@
     ENVIRONMENT: production
     TYPEORM_CONNECTION: postgres
     TYPEORM_ENTITIES: ./src/modules/domain/**/*.entity.ts
-    TYPEORM_HOST: udacity-cdond-db.c7jhpmtpptdb.us-east-1.rds.amazonaws.com
+    TYPEORM_HOST: uda-cdond-db.c7jhpmtpptdb.us-east-1.rds.amazonaws.com
     TYPEORM_PORT: 5432
     TYPEORM_USERNAME: postgres
     TYPEORM_PASSWORD: $IbsJ14MbTG.
