@@ -323,8 +323,8 @@ jobs:
       - run:
           name: Create .env file and deploy backend
           command: |
-            cd ~/project/.circleci/ansible
-            mkdir ~/project/backend/.env
+#            cd ~/project/.circleci/ansible
+            cd ~/project
             echo NODE_ENV=production > "backend/.env"
             echo VERSION=1 >> "backend/.env"
             echo ENVIROMENT=development >> "backend/.env"
