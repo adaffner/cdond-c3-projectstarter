@@ -286,10 +286,10 @@ jobs:
           command: |
             export BACKEND_URL=`curl -H "token: d36b76e8-a38c-4ded-887b-2a4d0c7cab38" --request \
               GET https://api.memstash.io/values/backend-url`
-            echo "Dies ist die Backend-URL: ${BACKEND_URL}"
-            export API_URL="http://${BACKEND_URL}:3030"
-            echo API_URL="http://${BACKEND_IP}:3030" >> "frontend/.env"
-            echo "Dies ist die API-URL: ${API_URL}"
+            BACKEND_API_URL="http://${BACKEND_IP}:3030"
+            echo ENVIRONMENT=production     > "frontend/.env"
+            echo NODE_ENV=production        >> "frontend/.env"
+            echo API_URL=$BACKEND_API_URL   >> "frontend/.env"
       - run:
           name: Deploy frontend objects
           command: |
@@ -299,7 +299,6 @@ jobs:
             aws s3 cp ./dist s3://udapeople-${CIRCLE_WORKFLOW_ID} --recursive
             npm install webpack-dev-server -g
       - revert-migrations
-      # Here's where you will add some code to rollback on failure
       - destroy-environment
 
   deploy-backend:
@@ -326,7 +325,7 @@ jobs:
             cd ~/project
             echo NODE_ENV=production > "backend/.env"
             echo VERSION=1 >> "backend/.env"
-            echo ENVIROMENT=development >> "backend/.env"
+            echo ENVIROMENT=production >> "backend/.env"
             echo TYPEORM_CONNECTION=postgres >> "backend/.env"
             echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> "backend/.env"
             echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> "backend/.env"
